@@ -250,6 +250,7 @@ class Istemci {
         const elapsedTimeInSeconds = Math.floor((elapsedTime - elapsedTimeInHours * 1000 * 60 * 60 - elapsedTimeInMinutes * 1000 * 60) / 1000);
         return `${elapsedTimeInHours} saat ${elapsedTimeInMinutes} dakika ${elapsedTimeInSeconds} saniye`;
 
+
     }
 
 
