@@ -221,9 +221,9 @@ class Istemci {
         })
         const bitisZamaniSn = (new Date() - baslamaZamani) / 1000;
         this.basariliKaziSureleriSn.push(bitisZamaniSn);
-        console.log(`Kazılan ${this.basariliKaziSureleriSn.length+1}. bloğa harcanan zaman: ` + bitisZamaniSn + "sn");
-        console.log("Ortalama kazı süresi: " + parseFloat(Istemci.mean(this.basariliKaziSureleriSn)).toFixed(3) + " sn");
-        console.log("Medyan kazı süresi: " + parseFloat(Istemci.median(this.basariliKaziSureleriSn)).toFixed(3) + " sn");
+        console.log(`${this.basariliKaziSureleriSn.length}. blok kazıldı. Harcanan zaman: ` + bitisZamaniSn + "sn");
+        console.log("Ortalama: " + parseFloat(Istemci.mean(this.basariliKaziSureleriSn)).toFixed(3) + " sn" + " Medyan: " + parseFloat(Istemci.median(this.basariliKaziSureleriSn)).toFixed(3) + " sn");
+        console.log("En az: ", Math.min(this.basariliKaziSureleriSn).toFixed(3) + " sn" + " En çok: ", Math.max(this.basariliKaziSureleriSn).toFixed(3) + " sn");
 
     }
 
