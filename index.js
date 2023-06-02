@@ -21,6 +21,7 @@ class Istemci {
         this.parmakIzi = parmakIzi;
         this.config = config;
         this.basariliKaziSureleriSn = [];
+        this.baslamaZamani = new Date();
     }
 
     url(endpoint) {
@@ -221,9 +222,10 @@ class Istemci {
         })
         const bitisZamaniSn = (new Date() - baslamaZamani) / 1000;
         this.basariliKaziSureleriSn.push(bitisZamaniSn);
-        console.log(`${this.basariliKaziSureleriSn.length}. blok kazıldı. Harcanan zaman:\t` + bitisZamaniSn + "sn");
-        console.log("Ortalama:\t" + parseFloat(Istemci.mean(this.basariliKaziSureleriSn)).toFixed(3) + " sn" + "\tMedyan:\t" + parseFloat(Istemci.median(this.basariliKaziSureleriSn)).toFixed(3) + " sn");
-        console.log("En az:\t", Math.min(...this.basariliKaziSureleriSn).toFixed(3) + " sn" + "\tEn çok:\t", Math.max(...this.basariliKaziSureleriSn).toFixed(3) + " sn");
+        console.log(`${this.basariliKaziSureleriSn.length}. blok kazıldı. Harcanan zaman: ` + bitisZamaniSn + "sn");
+        console.log("Ortalama:\t" + Istemci.mean(this.basariliKaziSureleriSn).toFixed(3) + " sn" + "\tMedyan:\t" + Istemci.median(this.basariliKaziSureleriSn).toFixed(3) + " sn");
+        console.log("Asgari:  \t" + Math.min(...this.basariliKaziSureleriSn).toFixed(3) + " sn" + "\tAzami:\t" + Math.max(...this.basariliKaziSureleriSn).toFixed(3) + " sn");
+        console.log("Toplam geçen zaman saniye dakika: " + this.gecenToplamZaman())
 
     }
 
@@ -239,6 +241,18 @@ class Istemci {
     static mean(values) {
         return values.reduce((a, b) => a + b) / values.length;
     }
+
+    gecenToplamZaman() {
+        const now = new Date();
+        const elapsedTime = now - this.baslamaZamani;
+        const elapsedTimeInHours = Math.floor(elapsedTime / 1000 / 60 / 60);
+        const elapsedTimeInMinutes = Math.floor((elapsedTime - elapsedTimeInHours * 1000 * 60 * 60) / 1000 / 60);
+        const elapsedTimeInSeconds = Math.floor((elapsedTime - elapsedTimeInHours * 1000 * 60 * 60 - elapsedTimeInMinutes * 1000 * 60) / 1000);
+        return `${elapsedTimeInHours} saat ${elapsedTimeInMinutes} dakika ${elapsedTimeInSeconds} saniye`;
+
+    }
+
+
 }
 
 async function main() {
