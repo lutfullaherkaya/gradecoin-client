@@ -192,7 +192,7 @@ class Istemci {
     }
 
     async beraberNonceBul(blockRequest) {
-        console.log('Nonce bulunuyor.')
+        console.log('Nonce aranıyor.')
         // calculate execution time
         const baslamaZamani = new Date();
 
@@ -221,7 +221,7 @@ class Istemci {
         })
         const bitisZamaniSn = (new Date() - baslamaZamani) / 1000;
         this.basariliKaziSureleriSn.push(bitisZamaniSn);
-        console.log("Madenciliğe harcanan zaman: " + bitisZamaniSn + "sn");
+        console.log(`Kazılan ${this.basariliKaziSureleriSn.length+1}. bloğa harcanan zaman: ` + bitisZamaniSn + "sn");
         console.log("Ortalama kazı süresi: " + parseFloat(Istemci.mean(this.basariliKaziSureleriSn)).toFixed(3) + " sn");
         console.log("Medyan kazı süresi: " + parseFloat(Istemci.median(this.basariliKaziSureleriSn)).toFixed(3) + " sn");
 
