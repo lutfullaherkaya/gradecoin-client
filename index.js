@@ -122,11 +122,11 @@ class Istemci {
                     islemler.push(islem);
                 }
                 if (islemler.length >= this.config.block_transaction_count) {
-                    // sort islemler by iso timestamp
+                    // sort islemler by iso timestamp descending (getting the most recent ten which we started recently)
                     islemler.sort((a, b) => {
                         const aDate = new Date(a.timestamp);
                         const bDate = new Date(b.timestamp);
-                        return aDate - bDate;
+                        return bDate - aDate;
                     });
                     const kendiIslemimIndeks = islemler.findIndex(islem => islem.source === this.parmakIzi);
                     if (kendiIslemimIndeks === -1) {
@@ -223,7 +223,7 @@ class Istemci {
         this.basariliKaziSureleriSn.push(bitisZamaniSn);
         console.log(`${this.basariliKaziSureleriSn.length}. blok kazıldı. Harcanan zaman:\t` + bitisZamaniSn + "sn");
         console.log("Ortalama:\t" + parseFloat(Istemci.mean(this.basariliKaziSureleriSn)).toFixed(3) + " sn" + "\tMedyan:\t" + parseFloat(Istemci.median(this.basariliKaziSureleriSn)).toFixed(3) + " sn");
-        console.log("En az:\t", Math.min(this.basariliKaziSureleriSn).toFixed(3) + " sn" + "\tEn çok:\t", Math.max(this.basariliKaziSureleriSn).toFixed(3) + " sn");
+        console.log("En az:\t", Math.min(...this.basariliKaziSureleriSn).toFixed(3) + " sn" + "\tEn çok:\t", Math.max(...this.basariliKaziSureleriSn).toFixed(3) + " sn");
 
     }
 
