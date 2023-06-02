@@ -1,0 +1,7 @@
+node_modules
+node_modules/*
+.name
+.idea
+.idea/*
+modules.xml
+gradecoin-client.iml
