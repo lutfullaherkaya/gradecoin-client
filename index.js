@@ -6,6 +6,10 @@ const blake = require('blakejs');
 const blake2 = require('blake2');
 const os = require('os');
 
+// ryzen 5 7600 işlemcide madencilik değerleri:
+// Ortalama:       6.908 sn        Medyan: 7.255 sn
+// Asgari:         0.217 sn        Azami:  15.604 sn
+
 const {
     Worker,
     isMainThread,
@@ -290,7 +294,5 @@ async function main() {
 
 main();
 
-// bir blok 13 saniye suruyor ortalama
-// dakikada 14 coin
 
 
