@@ -148,16 +148,20 @@ class Istemci {
                         const bDate = new Date(b.timestamp);
                         return bDate - aDate;
                     });
-                    const banaGelenler = [];
-                    const banaGelmeyenler = [];
-                    for (const islem of islemler) {
-                        if (islem.target === this.parmakIzi) {
-                            banaGelenler.push(islem);
-                        } else {
-                            banaGelmeyenler.push(islem);
+                    const banaGelenleriOncelikle = false;
+                    if (banaGelenleriOncelikle) {
+                        const banaGelenler = [];
+                        const banaGelmeyenler = [];
+                        for (const islem of islemler) {
+                            if (islem.target === this.parmakIzi) {
+                                banaGelenler.push(islem);
+                            } else {
+                                banaGelmeyenler.push(islem);
+                            }
                         }
+                        islemler = banaGelenler.concat(banaGelmeyenler);
                     }
-                    islemler = banaGelenler.concat(banaGelmeyenler);
+
                     const kendiIslemimIndeks = islemler.findIndex(islem => islem.source === this.parmakIzi);
                     if (kendiIslemimIndeks === -1) {
                         console.log('Kendi işlemim bulunamadı. Tekrar bota ödeme yapılıyor.');
@@ -197,7 +201,7 @@ class Istemci {
         }
         await this.beraberNonceBul(blockRequest);
 
-        console.log(`${this.kaziSureleriSn.length}. blok kazıldı. Harcanan zaman: ` + this.kaziSureleriSn[this.kaziSureleriSn.length-1] + "sn");
+        console.log(`${this.kaziSureleriSn.length}. blok kazıldı. Harcanan zaman: ` + this.kaziSureleriSn[this.kaziSureleriSn.length - 1] + "sn");
         console.log("Ortalama:\t" + Istemci.mean(this.kaziSureleriSn).toFixed(3) + " sn" + "\tMedyan:\t" + Istemci.median(this.kaziSureleriSn).toFixed(3) + " sn");
         console.log("Asgari:  \t" + Math.min(...this.kaziSureleriSn).toFixed(3) + " sn" + "\tAzami:\t" + Math.max(...this.kaziSureleriSn).toFixed(3) + " sn");
         console.log("Toplam geçen zaman saniye dakika: " + this.gecenToplamZaman())
