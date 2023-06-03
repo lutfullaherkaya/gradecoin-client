@@ -180,7 +180,7 @@ class Istemci {
         }
         await this.beraberNonceBul(blockRequest);
 
-        console.log(`${this.kaziSureleriSn.length}. blok kazıldı. Harcanan zaman: ` + this.kaziSureleriSn[0] + "sn");
+        console.log(`${this.kaziSureleriSn.length}. blok kazıldı. Harcanan zaman: ` + this.kaziSureleriSn[this.kaziSureleriSn.length-1] + "sn");
         console.log("Ortalama:\t" + Istemci.mean(this.kaziSureleriSn).toFixed(3) + " sn" + "\tMedyan:\t" + Istemci.median(this.kaziSureleriSn).toFixed(3) + " sn");
         console.log("Asgari:  \t" + Math.min(...this.kaziSureleriSn).toFixed(3) + " sn" + "\tAzami:\t" + Math.max(...this.kaziSureleriSn).toFixed(3) + " sn");
         console.log("Toplam geçen zaman saniye dakika: " + this.gecenToplamZaman())
