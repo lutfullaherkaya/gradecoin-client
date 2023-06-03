@@ -7,8 +7,11 @@ const blake2 = require('blake2');
 const os = require('os');
 
 // ryzen 5 7600 işlemcide madencilik değerleri:
-// Ortalama:       6.908 sn        Medyan: 7.255 sn
-// Asgari:         0.217 sn        Azami:  15.604 sn
+// 143. blok kazıldı. Harcanan zaman: 6.218sn
+// Ortalama:       6.841 sn        Medyan: 4.809 sn
+// Asgari:         0.126 sn        Azami:  34.453 sn
+// Toplam geçen zaman saniye dakika: 0 saat 19 dakika 49 saniye
+
 
 const {
     Worker,
@@ -145,6 +148,16 @@ class Istemci {
                         const bDate = new Date(b.timestamp);
                         return bDate - aDate;
                     });
+                    const banaGelenler = [];
+                    const banaGelmeyenler = [];
+                    for (const islem of islemler) {
+                        if (islem.target === this.parmakIzi) {
+                            banaGelenler.push(islem);
+                        } else {
+                            banaGelmeyenler.push(islem);
+                        }
+                    }
+                    islemler = banaGelenler.concat(banaGelmeyenler);
                     const kendiIslemimIndeks = islemler.findIndex(islem => islem.source === this.parmakIzi);
                     if (kendiIslemimIndeks === -1) {
                         console.log('Kendi işlemim bulunamadı. Tekrar bota ödeme yapılıyor.');
