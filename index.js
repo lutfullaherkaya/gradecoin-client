@@ -67,12 +67,12 @@ class Istemci {
             'f44f83688b33213c639bc16f9c167543568d4173d5f4fc7eb1256f6c7bb23b26',
             'a4d9a38a04d0aa7de7c29fef061a1a539e6a192ef75ea9730aff49f9bb029f99',
             // rest is not bots but regular people with more than 100 coins for keeping the game going
-            /*'602f2194a236e3100978d0c65c2e17f7253a1f221f2b6fc625f692c5df19d1d3',
+            '602f2194a236e3100978d0c65c2e17f7253a1f221f2b6fc625f692c5df19d1d3',
             'dc6476290c9f42efe6b5bebead16cf067ca18b5b593d12e01bff656fa173eecc',
             '9d453e55cd1367ecf122fee880991e29458651f3824cd9ea47b89e06158936e3',
             '75c233939c5c1ccd03b9dccd26c52a50ade7190305970a30a0c4e17c36c58f14',
             '75cb40e1d4a5fdf3e3a8fe98a7b8b53ab3f6cd401e645b7b0e7d52b8519fb1a8',
-            '85bbd17fbeaaad45aecba62fb974b1ac40eda237d3679b8f213309b32facc376',*/
+            '85bbd17fbeaaad45aecba62fb974b1ac40eda237d3679b8f213309b32facc376',
 
         ];
         try {
