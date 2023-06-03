@@ -10,13 +10,24 @@ const {
 function nonceBul(blockRequest) {
     let serilestirilmis = '';
     let hash = '';
-    blockRequest.nonce = workerData.workerIndex;
+    let currentNonce = 1_000_000_000 + workerData.workerIndex;
+    const zeroes = '0'.repeat(workerData.hash_zeros);
+    // 32 bit en cok 2 milyar oluyor. nonce boyle olunca json stringi uzunluğu sabit kalarak işlem hızlanıyor.
+    blockRequest.nonce = currentNonce;
+    serilestirilmis = JSON.stringify(blockRequest, ['transaction_list', 'nonce', 'timestamp']);
+
+    const nonceIndex = serilestirilmis.indexOf('nonce') + 7;
+    const jsonBuffer = Buffer.from(serilestirilmis);
+
+
     do {
-        blockRequest.nonce += workerData.workerCount;
-        serilestirilmis = JSON.stringify(blockRequest, ['transaction_list', 'nonce', 'timestamp']);
-        hash = blake2.createHash('blake2s').update(Buffer.from(serilestirilmis)).digest("hex");
-    } while (hash.slice(0, workerData.hash_zeros) !== '0'.repeat(workerData.hash_zeros));
+        currentNonce += workerData.workerCount;
+        let stringNonce = currentNonce.toString();
+        jsonBuffer.write(stringNonce, nonceIndex, stringNonce.length);
+        hash = blake2.createHash('blake2s').update(jsonBuffer).digest("hex");
+    } while (hash.slice(0, workerData.hash_zeros) !== zeroes);
     blockRequest.hash = hash;
+    blockRequest.nonce = currentNonce;
 }
 
 nonceBul(workerData.block);

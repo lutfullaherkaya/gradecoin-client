@@ -164,7 +164,7 @@ class Istemci {
 
         const blockRequest = {
             transaction_list: islemler.map(islem => islem.id),
-            nonce: 1000000000,
+            nonce: 0,
             timestamp: Istemci.isoTurkiye(),
         }
         await this.beraberNonceBul(blockRequest);
