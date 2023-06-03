@@ -79,12 +79,16 @@ class Istemci {
             const islemler = Object.values((await axios.get(this.url('transaction'))).data);
             const kendiIslemlerim = islemler.filter(islem => islem.source === this.parmakIzi);
             console.log(`Oyun aksın diye botlara ve oyunu bitirenlere asgari ödeme yapılıyor.`);
+            const odenecekKisiler = [];
+
             for (const botParmakIzi of botParmakIzleri) {
-                const hedefiBuBotOlanIslemler = islemler.filter(islem => islem.target === botParmakIzi);
-                if (hedefiBuBotOlanIslemler.length === 0) {
-                    await this.ode(this.config.tx_lower_limit, botParmakIzi);
+                const hedefiBuBotOlanIslemlerim = kendiIslemlerim.filter(islem => islem.target === botParmakIzi);
+                if (hedefiBuBotOlanIslemlerim.length === 0) {
+                    odenecekKisiler.push(botParmakIzi);
                 }
             }
+            await Promise.all(odenecekKisiler.map(botParmakIzi => this.ode(this.config.tx_lower_limit, botParmakIzi)));
+
             // wait 1 seconds for request finishing
             // await new Promise(resolve => setTimeout(resolve, 1000));
         } catch (error) {
