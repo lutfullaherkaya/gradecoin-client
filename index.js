@@ -218,7 +218,7 @@ class Istemci {
         const baslamaZamani = new Date();
 
         await new Promise((resolve, reject) => {
-            const cekirdekSayisi = Math.floor(os.cpus().length / 1.5); // sanal cekirdekler icin biraz azalt
+            const cekirdekSayisi = Math.floor(os.cpus().length / 1.2); // sanal cekirdekler icin biraz azalt
             const workers = [];
             for (let i = 0; i < cekirdekSayisi; i++) {
                 const worker = new Worker(__dirname + "/hasher-worker.js", {
