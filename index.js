@@ -67,12 +67,12 @@ class Istemci {
             'f44f83688b33213c639bc16f9c167543568d4173d5f4fc7eb1256f6c7bb23b26',
             'a4d9a38a04d0aa7de7c29fef061a1a539e6a192ef75ea9730aff49f9bb029f99',
             // rest is not bots but regular people with more than 100 coins for keeping the game going
-            '602f2194a236e3100978d0c65c2e17f7253a1f221f2b6fc625f692c5df19d1d3',
-            'dc6476290c9f42efe6b5bebead16cf067ca18b5b593d12e01bff656fa173eecc',
-            '9d453e55cd1367ecf122fee880991e29458651f3824cd9ea47b89e06158936e3',
-            '75c233939c5c1ccd03b9dccd26c52a50ade7190305970a30a0c4e17c36c58f14',
-            '75cb40e1d4a5fdf3e3a8fe98a7b8b53ab3f6cd401e645b7b0e7d52b8519fb1a8',
-            '85bbd17fbeaaad45aecba62fb974b1ac40eda237d3679b8f213309b32facc376',
+            'c1da3dcc9d08f7e820ad2ecae77232f5f8a6e508b46e939008e55a2947e150a1',
+            '98179554a7c283072c6c3bf3b7444664e3d4af7d76bd3a1341430a0af3b166c7',
+            '1bf6590a4a85b5bb8fab61e5c028b7d8a305e33d4ef60e067f74561620ba6b8a',
+            '6ac5ef1e3de7984c5300ad3855de8a92cb86d7b2c804d7c7c1ef914141af2a62',
+            'e5ed590ed68523b68a869b74564d824f56728d8b29af8dd4dcf1049dfa93c2e2',
+            '52ceed61903d085528d86cee3842028f93d216f3d5d240d2b50d8093a3dd69fb',
 
         ];
         try {
@@ -87,7 +87,7 @@ class Istemci {
                     odenecekKisiler.push(botParmakIzi);
                 }
             }
-            await Promise.all(odenecekKisiler.map(botParmakIzi => this.ode(this.config.tx_lower_limit, botParmakIzi)));
+            await Promise.all(odenecekKisiler.map(botParmakIzi => this.ode(this.config.tx_lower_limit, botParmakIzi, false)));
 
             // wait 1 seconds for request finishing
             // await new Promise(resolve => setTimeout(resolve, 1000));
@@ -96,19 +96,26 @@ class Istemci {
         }
     }
 
-    async ode(miktar, hedef) {
+    async ode(miktar, hedef, infoLogla = true, errorLogla = true) {
         const transRequest = {
             source: this.parmakIzi, target: hedef, amount: miktar, timestamp: Istemci.isoTurkiye(),
         }
         const serilestirilmis = JSON.stringify(transRequest, ['source', 'target', 'amount', 'timestamp']);
         const hash = crypto.createHash('md5').update(serilestirilmis).digest("hex");
-        console.log('Ödeme yapılıyor:' + JSON.stringify(transRequest));
+        if (infoLogla) {
+            console.log('Ödeme yapılıyor:' + JSON.stringify(transRequest));
+        }
         try {
-            console.log((await axios.post(this.url('transaction'), transRequest, {
+            const cevap = (await axios.post(this.url('transaction'), transRequest, {
                 headers: {Authorization: `Bearer ${this.jwtTokeniOlustur(hash)}`}
-            })).data);
+            })).data;
+            if (infoLogla) {
+                console.log(cevap);
+            }
         } catch (error) {
-            Istemci.errorLogla(error);
+            if (errorLogla) {
+                Istemci.errorLogla(error);
+            }
         }
 
 
